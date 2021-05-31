@@ -6,30 +6,70 @@ import java.util.*;
 import java.util.List;
 
 public class Main {
+    static LinkedList<String[]> heap;
+    static LinkedList<String[]> pointers;
+    static LinkedList<String> roots;
 
     public static void main(String[] args){
         try {
-
-            LinkedList<String[]> list = new LinkedList<>();
-            BufferedReader csvReader = new BufferedReader(new FileReader("C:\\Users\\Dell\\Desktop\\lab2\\src\\com\\company\\heap.csv"));
-            String row;
-            String[] data = new String[0];
-            while ((row = csvReader.readLine()) != null) {
-                data = row.split(",");
-                list.add(data);
-            }
-            System.out.println(Arrays.toString(list.get(1)));
-            String [] arr = list.get(1);
-            System.out.println(arr[0]);
-            csvReader.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            read_heap();
+            read_pointers();
+            read_roots();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("hgfhfhdydtu");
-
 
     }
+
+
+    static void read_heap() throws IOException {
+        heap = new LinkedList<>();
+        BufferedReader csvReader = null;
+        try {
+            csvReader = new BufferedReader(new FileReader("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\src\\com\\company\\heap.csv"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String row;
+        String[] data = new String[0];
+        while ((row = csvReader.readLine()) != null) {
+            data = row.split(",");
+            heap.add(data);
+    }
+        csvReader.close();
+}
+
+
+static void read_pointers() throws IOException {
+    pointers = new LinkedList<>();
+    BufferedReader csvReader = null;
+    try {
+        csvReader = new BufferedReader(new FileReader("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\src\\com\\company\\pointers.csv"));
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    String row;
+    String[] data = new String[0];
+    while ((row = csvReader.readLine()) != null) {
+        data = row.split(",");
+        pointers.add(data);
+    }
+    csvReader.close();
+}
+
+static void read_roots() throws IOException {
+    roots = new LinkedList<>();
+    BufferedReader csvReader = null;
+    try {
+        csvReader = new BufferedReader(new FileReader("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\src\\com\\company\\roots.txt"));
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    String row;
+    String[] data = new String[0];
+    while ((row = csvReader.readLine()) != null) {
+        roots.add(row);
+    }
+    csvReader.close();
+}
 }
