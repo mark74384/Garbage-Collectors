@@ -24,6 +24,7 @@ public class Main {
       mark_compact();
       mark_compact2();
       resize();
+      write_result();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -159,5 +160,14 @@ public class Main {
       counter +=size + 1;
 
     }
+  }
+
+  public static void write_result() throws IOException {
+    FileWriter csvWriter = new FileWriter("new.csv");
+    for (int i=0 ; i<ans.size(); i++){
+      csvWriter.append(ans.get(i).getId()+","+ans.get(i).getStart()+","+ans.get(i).getEnd()+"\n");
+    }
+    csvWriter.flush();
+    csvWriter.close();
   }
 }
