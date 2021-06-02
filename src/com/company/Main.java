@@ -37,7 +37,7 @@ public class Main {
     BufferedReader csvReader = null;
     try {
       csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\src\\com\\company\\heap.csv"));
+          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\heap.csv"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -55,7 +55,7 @@ public class Main {
     BufferedReader csvReader = null;
     try {
       csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\src\\com\\company\\pointers.csv"));
+          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\pointers.csv"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -73,7 +73,7 @@ public class Main {
     BufferedReader csvReader = null;
     try {
       csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\src\\com\\company\\roots.txt"));
+          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\roots.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -101,7 +101,7 @@ public class Main {
       String id = pointers.get(i)[0];
       id = id.replaceAll("\\uFEFF", "");
       for (int j=0 ; j<newheap.size(); j++){
-        if (id.equals(newheap.get(j).getId())){
+        if (id.equals(newheap.get(j).getId().replaceAll("\\uFEFF" , ""))){
           newheap.get(j).addd(pointers.get(i)[1]);
         }
       }
@@ -112,7 +112,7 @@ public class Main {
     for (int i=0 ; i<roots.size() ; i++){
       String id = roots.get(i);
       for (int j=0 ; j<newheap.size(); j++){
-        if (id.equals(newheap.get(j).getId())){
+        if (id.equals(newheap.get(j).getId().replaceAll("\\uFEFF" , ""))){
           newheap.get(j).flag = true;
           flag_pointers(id);
         }
@@ -121,7 +121,7 @@ public class Main {
   }
   public static void flag_pointers(String id){
     for (int i=0 ; i<newheap.size() ; i++){
-      if (id.equals(newheap.get(i).getId())){
+      if (id.equals(newheap.get(i).getId().replaceAll("\\uFEFF" , ""))){
         for (int j=0 ; j< newheap.get(i).point.size() ; j++){
           String new_id =newheap.get(i).point.get(j);
           flag(new_id);
@@ -132,7 +132,7 @@ public class Main {
   }
   public static void flag(String id){
     for (int i=0 ; i<newheap.size() ; i++) {
-      if (id.equals(newheap.get(i).getId())){
+      if (id.equals(newheap.get(i).getId().replaceAll("\\uFEFF" , ""))){
         newheap.get(i).flag = true;
         flag_pointers(id);
       }
@@ -163,7 +163,7 @@ public class Main {
   }
 
   public static void write_result() throws IOException {
-    FileWriter csvWriter = new FileWriter("new.csv");
+    FileWriter csvWriter = new FileWriter("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\newCopyCompact.csv");
     for (int i=0 ; i<ans.size(); i++){
       csvWriter.append(ans.get(i).getId()+","+ans.get(i).getStart()+","+ans.get(i).getEnd()+"\n");
     }
