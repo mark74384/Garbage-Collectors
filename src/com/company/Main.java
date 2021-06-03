@@ -35,7 +35,7 @@ public class Main {
     BufferedReader csvReader = null;
     try {
       csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase3\\heap.csv"));
+          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\heap.csv"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -53,7 +53,7 @@ public class Main {
     BufferedReader csvReader = null;
     try {
       csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase3\\pointers.csv"));
+          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\pointers.csv"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -71,7 +71,7 @@ public class Main {
     BufferedReader csvReader = null;
     try {
       csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase3\\roots.txt"));
+          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\roots.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -161,7 +161,7 @@ public class Main {
   }
 
   public static void write_result() throws IOException {
-    FileWriter csvWriter = new FileWriter("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase3\\newCopyCompact.csv");
+    FileWriter csvWriter = new FileWriter("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\newCopyCompact.csv");
     for (int i=0 ; i<ans.size(); i++){
       csvWriter.append(ans.get(i).getId()+","+ans.get(i).getStart()+","+ans.get(i).getEnd()+"\n");
     }
