@@ -83,11 +83,11 @@ public class CopyGC {
         }
     }
 
-    void copyAlgo() throws IOException {
+    void copyAlgo(String path) throws IOException {
         for (int i = 0; i < numberOfRoots; i++) {
             objectQueue.add(rootsOfGraph[i]);
         }
-        FileWriter csvWriter = new FileWriter("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\new-heap-copy");
+        FileWriter csvWriter = new FileWriter(path);
         while (!objectQueue.isEmpty()){
             Object current = objectQueue.poll();
 

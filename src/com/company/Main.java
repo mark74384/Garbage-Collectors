@@ -10,19 +10,32 @@ public class Main {
   static ArrayList<String[]> heap;
   static ArrayList<String[]> pointers;
   static ArrayList<String> roots;
+  public static final String UTF8_BOM = "\uFEFF";
 
 
   public static void main(String[] args) {
+   /* String heap = args[0];
+    String pointers = args[1];
+    String roots = args[2];
+    String output = args[3];*/
+    String heap = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\heap.csv";
+    String pointers = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\pointers.csv";
+    String roots = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\roots.txt";
+    String output = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\newcopy.csv";
     try {
-      read_heap();
+      read_heap(heap);
       convert_heap();
-      read_pointers();
+      read_pointers(pointers);
       convert_pointers();
-      read_roots();
-      mark_compact();
+      read_roots(roots);
+      CopyGC copy = new CopyGC();
+      copy.buildRoots();
+      copy.buildGraph();
+      copy.copyAlgo(output);
+      /*mark_compact();
       mark_compact2();
       resize();
-      write_result();
+      write_result(output);*/
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -30,54 +43,63 @@ public class Main {
   }
 
 
-  static void read_heap() throws IOException {
+  static void read_heap(String path) throws IOException {
     heap = new ArrayList<String[]>();
     BufferedReader csvReader = null;
     try {
-      csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\heap.csv"));
+      csvReader = new BufferedReader(new FileReader(path));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
     String row;
     String[] data = new String[0];
     while ((row = csvReader.readLine()) != null) {
+      row = row.replaceAll("ï»¿", "");
+      if (row.startsWith(UTF8_BOM)) {
+        row = row.substring(1);
+      }
       data = row.split(",");
       heap.add(data);
     }
     csvReader.close();
   }
 
-  static void read_pointers() throws IOException {
+  static void read_pointers(String path) throws IOException {
     pointers = new ArrayList<>();
     BufferedReader csvReader = null;
     try {
-      csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\pointers.csv"));
+      csvReader = new BufferedReader(new FileReader(path));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
     String row;
     String[] data = new String[0];
     while ((row = csvReader.readLine()) != null) {
+      row = row.replaceAll("ï»¿", "");
+      if (row.startsWith(UTF8_BOM)) {
+        row = row.substring(1);
+      }
       data = row.split(",");
       pointers.add(data);
     }
     csvReader.close();
   }
 
-  static void read_roots() throws IOException {
+  static void read_roots(String path) throws IOException {
     roots = new ArrayList<>();
     BufferedReader csvReader = null;
     try {
-      csvReader = new BufferedReader(new FileReader(
-          "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\roots.txt"));
+      csvReader = new BufferedReader(new FileReader(path));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
     String row;
     String[] data = new String[0];
     while ((row = csvReader.readLine()) != null) {
+      row = row.replaceAll("ï»¿", "");
+      if (row.startsWith(UTF8_BOM)) {
+        row = row.substring(1);
+      }
       roots.add(row);
     }
     csvReader.close();
@@ -160,8 +182,8 @@ public class Main {
     }
   }
 
-  public static void write_result() throws IOException {
-    FileWriter csvWriter = new FileWriter("C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase5\\newCopyCompact.csv");
+  public static void write_result(String path) throws IOException {
+    FileWriter csvWriter = new FileWriter(path);
     for (int i=0 ; i<ans.size(); i++){
       csvWriter.append(ans.get(i).getId()+","+ans.get(i).getStart()+","+ans.get(i).getEnd()+"\n");
     }
