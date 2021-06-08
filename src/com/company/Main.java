@@ -18,24 +18,24 @@ public class Main {
     String pointers = args[1];
     String roots = args[2];
     String output = args[3];*/
-    String heap = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\heap.csv";
-    String pointers = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\pointers.csv";
-    String roots = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\roots.txt";
-    String output = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase2\\newcopy.csv";
+    String heap = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase1\\heap.csv";
+    String pointers = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase1\\pointers.csv";
+    String roots = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase1\\roots.txt";
+    String output = "C:\\Users\\Dell\\Desktop\\Garbage-Collectors\\testcase1\\new.csv";
     try {
       read_heap(heap);
       convert_heap();
       read_pointers(pointers);
       convert_pointers();
       read_roots(roots);
-      CopyGC copy = new CopyGC();
+      /*CopyGC copy = new CopyGC();
       copy.buildRoots();
       copy.buildGraph();
-      copy.copyAlgo(output);
-      /*mark_compact();
+      copy.copyAlgo(output);*/
+      mark_compact();
       mark_compact2();
       resize();
-      write_result(output);*/
+      write_result(output);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -153,6 +153,9 @@ public class Main {
   public static void flag(String id){
     for (int i=0 ; i<newheap.size() ; i++) {
       if (id.equals(newheap.get(i).getId().replaceAll("\\uFEFF" , ""))){
+        if (newheap.get(i).flag == true){
+          return;
+        }
         newheap.get(i).flag = true;
         flag_pointers(id);
       }

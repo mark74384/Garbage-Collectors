@@ -44,21 +44,32 @@ public class CopyGC {
     // adds it to the graph
     void buildGraphChildren(Object rootObject){
         for (String[] pointer : pointers) {
+
+            pointer[0] = pointer[0].replaceAll("ï»¿", "");
+            rootObject.id = rootObject.id.replaceAll("ï»¿", "");
             if (Integer.parseInt(pointer[0]) == Integer.parseInt(rootObject.id)) {
-                for (String[] strings : heap) {
+                for (String[] heapS : heap) {
                     // if the parent object is in the pointers list, add his child to his references list
                     // of objects and use recursion to do the same for the child
-                    if (Integer.parseInt(pointer[1]) == Integer.parseInt(strings[0])) {
+                    pointer[1] = pointer[1].replaceAll("ï»¿", "");
+                    heapS[0] = heapS[0].replaceAll("ï»¿", "");
+                    if (Integer.parseInt(pointer[1]) == Integer.parseInt(heapS[0])) {
+//            if(Integer.parseInt(pointer[1]) != Integer.parseInt(pointer[0])){
+//              rootObject.references[rootObject.numberOfRefObj] = fromSpace.get(heapS[0]);
+//            }
+
                         // if the child object is already allocated (present in the hashMap), add it to the
                         // graph, else, allocate it  and add to the graph
-                        if(!fromSpace.containsKey(strings[0])){
-                            Object newObj = new Object(strings[0], strings[1],
-                                    strings[2]);
+                        if(!fromSpace.containsKey(heapS[0])){
+                            Object newObj = new Object(heapS[0], heapS[1],
+                                    heapS[2]);
                             rootObject.references[rootObject.numberOfRefObj] = newObj;
                             fromSpace.put(newObj.id,newObj);
                             buildGraphChildren(newObj);
+
+
                         } else {
-                            rootObject.references[rootObject.numberOfRefObj] = fromSpace.get(strings[0]);
+                            rootObject.references[rootObject.numberOfRefObj] = fromSpace.get(heapS[0]);
                         }
                         rootObject.numberOfRefObj++;
                         break;
@@ -107,7 +118,10 @@ public class CopyGC {
             }
 
             for (int i = 0; i < current.numberOfRefObj; i++) {
-                objectQueue.add(current.references[i]);
+                if(!toSpace.containsKey(current.references[i].id)){
+                    objectQueue.add(current.references[i]);
+                }
+
             }
         }
         csvWriter.flush();
@@ -118,7 +132,4 @@ public class CopyGC {
         c = 0;
     }
 
-    void traverseGraph(Object rootObject){
-
-    }
 }
